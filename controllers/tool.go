@@ -12,3 +12,8 @@ type ToolController struct {
 func (c *ToolController) Get() {
 	c.TplName = "tool/index.html"
 }
+
+// Timestamp Unix时间戳转换工具首页
+func (c *ToolController) Timestamp() {
+	c.TplName = "tool/timestamp.html"
+}

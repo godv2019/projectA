@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Project A在线Unix时间戳转换">
+    <meta name="author" content="Allen">
+    <link rel="icon" href="/static/icon/favicon.ico">
+    <title>Project A | Unix时间戳转换</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/frame/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/jumbotron.css" rel="stylesheet">
+    <style>
+        .jumbotron .container .form-inline label:first-child {
+            width: 100px;
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .jumbotron .container .form-inline {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+<!-- 导航条 -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/" target="_blank">Project A</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/tool" target="_blank">工具</a></li>
+                <li><a href="/blog" target="_blank">博客</a></li>
+                <li><a href="#">教程</a></li>
+                <li><a href="#">人生</a></li>
+                <li><a href="#">新闻</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" placeholder="站内搜索..." class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success">搜索</button>
+            </form>
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="localUnix">本地时间戳</label>
+                <input type="text" class="form-control" id="localUnix" placeholder="10位时间戳">
+                <button id="btnStat" type="button" class="btn btn-info">停止</button>
+                <input type="text" class="form-control" id="localTime" placeholder="转换结果">
+            </div>
+        </form>
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="unix">时间戳</label>
+                <input type="text" class="form-control" id="unix" placeholder="10位时间戳">
+                <button id="btnUnixToTime" type="button" class="btn btn-success">转换</button>
+                <input type="text" class="form-control" id="unixToTime" placeholder="转换结果">
+            </div>
+        </form>
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="time">时间</label>
+                <input type="text" class="form-control" id="time" placeholder="yyyy-MM-dd HH:mm:ss">
+                <button id="btnTimeToUnix" type="button" class="btn btn-success">转换</button>
+                <input type="text" class="form-control" id="timeToUnix" placeholder="转换结果">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Unix时间戳转换</h2>
+            <p>在线时间戳格式化/反格式化</p>
+            <p><a class="btn btn-default" href="/tool/timestamp" target="_blank" role="button">进入 &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>JSON解析</h2>
+            <p>Developing...</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>二维码生成</h2>
+            <p>Developing...</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p class="text-center">粤ICP备19054185号</p>
+    </footer>
+</div> <!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-3.4.1.min.js"></script>
+<script src="/static/frame/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/js/common.js"></script>
+<script>
+    var $localUnix = $('#localUnix')
+    var $localTime = $('#localTime')
+    var $unix = $('#unix')
+    var $unixToTime = $('#unixToTime')
+    var $time = $('#time')
+    var $timeToUnix = $('#timeToUnix')
+
+    // 是否运行中
+    var isRunning = true
+
+    // Click: 状态按钮点击事件
+    $('#btnStat').click(() => {
+        if (isRunning) {
+            $('#btnStat').html('开始').removeClass('btn-info').addClass('btn-default')
+        } else {
+            $('#btnStat').html('停止').removeClass('btn-default').addClass('btn-info')
+        }
+        isRunning = !isRunning
+    })
+
+    // Click: 本地时间戳点击事件
+    $localUnix.click(() => {
+        $unix.val($localUnix.val())
+    })
+
+    // Click: 本地时间点击事件
+    $localTime.click(() => {
+        $time.val($localTime.val())
+    })
+
+    // Click: Unix时间戳转日期按钮点击事件
+    $('#btnUnixToTime').click(() => {
+        var unix = $unix.val()
+        // TODO: 判断
+        var date = new Date(unix * 1000)
+        $unixToTime.val(date.format())
+    })
+
+    // Click: 日期转Unix时间戳按钮点击事件
+    $('#btnTimeToUnix').click(() => {
+        var time = $time.val()
+        // TODO: 判断
+        $timeToUnix.val(timeStrToUnix(time) / 1000)
+    })
+
+    /**
+     * 初始化函数
+     */
+    function init() {
+        // 获取当前日期对象
+        var curDate = new Date()
+        $unix.val(parseInt(curDate.getTime() / 1000))
+        $time.val(curDate.format())
+        $localUnix.val(parseInt(curDate.getTime() / 1000))
+        $localTime.val(curDate.format())
+
+        // 定时器：每秒更新
+        setInterval(() => {
+            if (isRunning) {
+                curDate = new Date()
+                $localUnix.val(parseInt(curDate.getTime() / 1000))
+                $localTime.val(curDate.format())
+            }
+        }, 1000)
+    }
+
+    init()
+</script>
+</body>
+</html>
